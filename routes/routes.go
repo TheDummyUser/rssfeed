@@ -17,7 +17,13 @@ func SetupRoutes(app *fiber.App, db *gorm.DB) {
 	api.Post("/register", func(c *fiber.Ctx) error {
 		return handlers.Signup(c, db)
 	})
+	api.Get("/logout", func(c *fiber.Ctx) error {
+		return handlers.Logout(c, db)
+	})
 
+	api.Post("/refresh", func(c *fiber.Ctx) error {
+		return handlers.RefreshToken(c, db)
+	})
 	protected := api.Group("", middleware.Protected())
 
 	// rss add and rss view
@@ -27,6 +33,10 @@ func SetupRoutes(app *fiber.App, db *gorm.DB) {
 
 	protected.Get("/fetchrss", func(c *fiber.Ctx) error {
 		return handlers.FetchRssFeeds(c, db)
+	})
+
+	protected.Post("/summarize", func(c *fiber.Ctx) error {
+		return handlers.SummarizeAi(c, db)
 	})
 
 }

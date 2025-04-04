@@ -7,12 +7,13 @@ import (
 )
 
 type User struct {
-	ID        uint           `gorm:"primaryKey;autoIncrement" json:"id"`
-	Username  string         `gorm:"size:50;unique;not null" json:"username"`
-	Email     string         `gorm:"size:100;unique;not null" json:"email"`
-	Password  string         `gorm:"not null" json:"-"`
-	CreatedAt time.Time      `gorm:"autoCreateTime" json:"created_at"`
-	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
+	ID           uint           `gorm:"primaryKey;autoIncrement" json:"id"`
+	Username     string         `gorm:"size:50;unique;not null" json:"username"`
+	Email        string         `gorm:"size:100;unique;not null" json:"email"`
+	Password     string         `gorm:"not null" json:"-"`
+	RefreshToken *string        `gorm:"type:text;unique" json:"refresh_token,omitempty"` // Nullable, unique, omitempty
+	CreatedAt    time.Time      `gorm:"autoCreateTime" json:"created_at"`
+	DeletedAt    gorm.DeletedAt `gorm:"index" json:"-"`
 }
 
 type SignupRequest struct {
